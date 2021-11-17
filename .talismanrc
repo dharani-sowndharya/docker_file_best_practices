@@ -1,0 +1,4 @@
+fileignoreconfig:
+- filename: DOCKERFILE.md
+  checksum: 9cb94a9a1240d0f5bf91dc65146a34685e71952174706f321a14e877f6785c9f
+version: "1.0"
