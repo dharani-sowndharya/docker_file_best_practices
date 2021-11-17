@@ -1,2 +1,3 @@
 FROM debian:wheezy
+RUN apt-get inst http
 ADD . /tmp

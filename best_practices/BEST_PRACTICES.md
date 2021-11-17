@@ -106,9 +106,9 @@ RUN apt-get update && apt-get install -y \
     ```
     Git clone with new tag
     ```
-RUN git clone https://github.com/bdehamer/dot_files.git WORKDIR /dot_files 
-RUN git checkout v1.1.0
-```
+    RUN git clone https://github.com/bdehamer/dot_files.git WORKDIR /dot_files  
+    RUN git checkout v1.1.0
+    ```
 
 If we do Docker build now, it'll throw an error that the tag does not exist. This is because the git clone command is cached. To avoid this we can use
 ```
