@@ -51,7 +51,6 @@ What am I trying to improve? Faster deployments and reducing attack surface
  
 3. Do not use multiple RUN commands as each RUN command will build a layer. Try to install all packages with a single RUN command. 
 What gets affected? Performance and efficiency
-   Eg: 
    
 ```Dockerfile
 RUN apt-get update && apt-get install -y \
@@ -70,9 +69,8 @@ RUN apt-get update && apt-get install -y \
 
 4. Build:
     1. Leverage build cache
-       Why? If your build contains different layers, keep the frequently changing layers at the end and the constant layers at the top
+       Why? If your build contains different layers, keep the frequently changing layers at the end and the constant layers at the top.
        For example, if you need to install OS packages, place them on the top(This is relatively slow) so that in the subsequent build docker will use the cache from the previous build and you need not wait every single time
-
    2. Build the source app in a managed environment
        Why? Building in local might create inconsistency as the packages you have installed in your local could have an effect on the build
        Eg: jdk version changes could significantly affect your build
@@ -99,22 +97,22 @@ RUN apt-get update && apt-get install -y \
        subversion \
        && rm -rf /var/lib/apt/lists/*   
     ```
-7. Utilize --no-cache when you want to intentionally invalidate the cache
+7. Utilize --no-cache=true when you want to intentionally invalidate the cache
 
-Eg: Git clone with old tag
-```
-RUN git clone https://github.com/bdehamer/dot_files.git WORKDIR /dot_files 
-RUN git checkout v1.0.0
-```
-Git clone with new tag
-```
+    Eg: Git clone with old tag
+    ```
+    RUN git clone https://github.com/bdehamer/dot_files.git WORKDIR /dot_files 
+    RUN git checkout v1.0.0
+    ```
+    Git clone with new tag
+    ```
 RUN git clone https://github.com/bdehamer/dot_files.git WORKDIR /dot_files 
 RUN git checkout v1.1.0
 ```
 
 If we do Docker build now, it'll throw an error that the tag does not exist. This is because the git clone command is cached. To avoid this we can use
 ```
-docker build -t demo --no-cache ./Dockerfile
+docker build -t demo --no-cache=true ./Dockerfile
 ```
 Or change the Dockerfile to
 ```
